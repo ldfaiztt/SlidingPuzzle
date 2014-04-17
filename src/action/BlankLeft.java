@@ -1,13 +1,14 @@
 package action;
 
+import model.Plain;
 import model.State;
 
-/**
- * Created by WHPM-1031 on 4/16/2014.
- */
 public class BlankLeft implements Action {
     @Override
     public State act(State cur) {
-        return null;
+        Plain next = new Plain((Plain) cur);
+        next.BlankLeft();
+
+        return next;
     }
 }
