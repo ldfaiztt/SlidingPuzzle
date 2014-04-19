@@ -11,6 +11,10 @@ public class Tile {
         return value == 0;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -18,9 +22,8 @@ public class Tile {
 
         Tile tile = (Tile) o;
 
-        if (value != tile.value) return false;
+        return value == tile.value;
 
-        return true;
     }
 
     @Override
