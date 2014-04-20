@@ -50,4 +50,31 @@ public class Node implements Comparable{
 
         return myCost - othCost;
     }
+
+    @Override
+    public int hashCode() {
+        return curState.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        String[] lines = curState.toString().split(System.lineSeparator());
+
+        int mid = lines.length / 2;
+
+        int actualCost = cost;
+        int heuristicCost = huris.eval(curState,goalState);
+        int sumCost = actualCost + heuristicCost;
+        String ret = "";
+        for (int i = 0; i < lines.length; i++) {
+            if (mid == i){
+                ret += lines[i] + " cost = " + actualCost + " + " + heuristicCost + " = " + sumCost + /*" hash = " + curState.hashCode() +*/ System.lineSeparator();
+            }
+            else {
+                ret += lines[i] + System.lineSeparator();
+            }
+        }
+
+        return ret;
+    }
 }

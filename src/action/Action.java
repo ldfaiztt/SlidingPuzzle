@@ -9,7 +9,7 @@ public abstract class Action {
         String[] curlines = cur.toString().split(System.lineSeparator());
         String[] nextlines = next.toString().split(System.lineSeparator());
 
-        int mid = curlines.length / 2 - 1;
+        int mid = curlines.length / 2;
 
         String ret = "";
         for (int i = 0; i < curlines.length; i++) {

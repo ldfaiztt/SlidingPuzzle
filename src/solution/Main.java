@@ -67,6 +67,12 @@ public class Main {
         }
 
         Puzzle puzzle = new Puzzle(size, hType, inputList);
-        puzzle.Run();
+        Node sln = puzzle.Run();
+        if (sln == null) {
+            System.out.println("Puzzle failed!");
+        }
+        else {
+            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString());
+        }
     }
 }

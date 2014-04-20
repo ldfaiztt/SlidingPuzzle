@@ -1,11 +1,11 @@
 package utest;
 
+import eval.HeuristicFacotry;
 import junit.framework.TestCase;
 import model.Plain;
 import model.State;
 import solution.Node;
 import solution.Puzzle;
-import eval.HeuristicFacotry;
 
 /**
  * User: Ding
@@ -25,15 +25,17 @@ public class PuzzleTest extends TestCase {
 
     }
 
-//    public void testRandomDistance() throws Exception {
-//        for (int i = 0; i < 100; i++) {
-//            Puzzle puzzle = new Puzzle(3, HeuristicFacotry.typeHeuristic.Distance, null);
-//            Node sln = puzzle.Run();
-//
-//            assertNotNull(sln);
-//            assertEquals(sln.getState(), goal);
-//        }
-//    }
+    public void testRandomDistance() throws Exception {
+        for (int i = 0; i < 100; i++) {
+            Puzzle puzzle = new Puzzle(3, HeuristicFacotry.typeHeuristic.Distance, null);
+            Node sln = puzzle.Run();
+
+            assertNotNull(sln);
+            assertEquals(sln.getState(), goal);
+
+            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString());
+        }
+    }
 
     public void testRandomMisplaced() throws Exception {
         for (int i = 0; i < 100; i++) {
@@ -42,6 +44,8 @@ public class PuzzleTest extends TestCase {
 
             assertNotNull(sln);
             assertEquals(sln.getState(), goal);
+
+            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString());
         }
     }
 }
