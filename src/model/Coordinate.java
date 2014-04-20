@@ -16,7 +16,7 @@ public class Coordinate {
 
     public Coordinate(Coordinate oth) {
         this.row = oth.row;
-        this.col = oth.row;
+        this.col = oth.col;
     }
 
     public int getRow() {

@@ -1,7 +1,8 @@
-package model;
+package solution;
 
 import eval.HeuristicFacotry;
 import eval.Heuristics;
+import model.State;
 
 import java.util.ArrayList;
 import java.util.List;

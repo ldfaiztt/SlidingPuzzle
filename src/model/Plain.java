@@ -9,11 +9,11 @@ public class Plain implements State {
     List<List<Tile>> matrix;
     Coordinate coorBlank;
 
-    public Plain(int size, boolean random) {
-        if (random) {
-            InitialRandom(size);
-        } else {
+    public Plain(int size, boolean ordered) {
+        if (ordered) {
             InitialOrdered(size);
+        } else {
+            InitialRandom(size);
         }
     }
 
@@ -21,8 +21,8 @@ public class Plain implements State {
         matrix = max;
         for (int i = 0; i < matrix.size(); i++) {
             for (int j = 0; j < matrix.get(i).size(); j++) {
-                if(getTile(new Coordinate(i,j)).isEmpty()) {
-                    UpdateBlankPos(i,j);
+                if (getTile(new Coordinate(i, j)).isEmpty()) {
+                    UpdateBlankPos(i, j);
                 }
             }
         }
@@ -38,19 +38,39 @@ public class Plain implements State {
         }
     }
 
+    public static boolean checkLegal(List<Integer> order) {
+        int sum = 0;
+        for (int i = 0; i < order.size(); i++) {
+            for (int j = i + 1; j < order.size(); j++) {
+                if (order.get(i) != 0 && order.get(j) != 0 && order.get(i) > order.get(j)) {
+                    sum++;
+                }
+            }
+        }
+
+        return sum % 2 == 0;
+    }
+
     private List<Integer> Shuffle(int size) {
-        List<Integer> random = new ArrayList<Integer>(size * size);
-        for (int i = 0; i < random.size(); i++) {
-            random.set(i, i);
+        List<Integer> random = new ArrayList<Integer>(size * size + 1);
+        for (int i = 0; i < size * size; i++) {
+            random.add(i);
         }
 
         Collections.shuffle(random);
+        while (!checkLegal(random)) {
+            Collections.shuffle(random);
+        }
 
         return random;
     }
 
     private void UpdateBlankPos(int row, int col) {
         coorBlank = new Coordinate(row, col);
+    }
+
+    private void UpdateBlankPos(Coordinate coor) {
+        coorBlank = coor;
     }
 
     private void InitialRandom(int size) {
@@ -71,7 +91,7 @@ public class Plain implements State {
     }
 
     private void InitialOrdered(int size) {
-        matrix = new ArrayList<List<Tile>>(size);
+        matrix = new ArrayList<List<Tile>>();
 
         for (int i = 0; i < size; i++) {
             List<Tile> row = new ArrayList<Tile>();
@@ -110,6 +130,12 @@ public class Plain implements State {
         Tile temp = getTile(c1);
         setTile(c1, getTile(c2));
         setTile(c2, temp);
+
+        if (getTile(c1).isEmpty()) {
+            UpdateBlankPos(c1);
+        } else if (getTile(c2).isEmpty()) {
+            UpdateBlankPos(c2);
+        }
 
         return true;
     }
@@ -195,12 +221,30 @@ public class Plain implements State {
 
         Plain plain = (Plain) o;
 
-        return matrix.equals(plain.matrix);
+        return hashCode() == plain.hashCode();
 
     }
 
     @Override
     public int hashCode() {
-        return matrix.hashCode();
+        return matrixToString().hashCode();
+    }
+
+    private String matrixToString() {
+        String ret = "";
+        for (List<Tile> row : matrix) {
+            for (Tile tile : row) {
+                ret += " " + tile.getValue();
+            }
+            ret += System.lineSeparator();
+        }
+
+        return ret;
+    }
+
+    @Override
+    public String toString() {
+        //String blankPos = "EmptyPos = " + coorBlank.getRow() + "," + coorBlank.getCol() + System.lineSeparator();
+        return matrixToString();
     }
 }
