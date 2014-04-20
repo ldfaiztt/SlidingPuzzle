@@ -17,6 +17,17 @@ public class Plain implements State {
         }
     }
 
+    public Plain(List<List<Tile>> max) {
+        matrix = max;
+        for (int i = 0; i < matrix.size(); i++) {
+            for (int j = 0; j < matrix.get(i).size(); j++) {
+                if(getTile(new Coordinate(i,j)).isEmpty()) {
+                    UpdateBlankPos(i,j);
+                }
+            }
+        }
+    }
+
     public Plain(Plain oth) {
         coorBlank = new Coordinate(oth.coorBlank);
 
