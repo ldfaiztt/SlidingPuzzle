@@ -43,6 +43,10 @@ public class Node implements Comparable{
         return childern.add(node);
     }
 
+    public Heuristics getHuris() {
+        return huris;
+    }
+
     @Override
     public int compareTo(Object o) {
         int myCost = CostEval();

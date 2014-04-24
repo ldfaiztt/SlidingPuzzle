@@ -15,4 +15,9 @@ public class Misplaced implements Heuristics {
             throw new IllegalArgumentException("Heuristic evaluation must >= 0 while here is " + ret);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Heuristic via misplaced tiles";
+    }
 }

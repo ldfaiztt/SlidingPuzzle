@@ -33,7 +33,7 @@ public class PuzzleTest extends TestCase {
             assertNotNull(sln);
             assertEquals(sln.getState(), goal);
 
-            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString());
+            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString() + sln.getHuris() + System.lineSeparator());
         }
     }
 
@@ -45,7 +45,7 @@ public class PuzzleTest extends TestCase {
             assertNotNull(sln);
             assertEquals(sln.getState(), goal);
 
-            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString());
+            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString() + sln.getHuris() + System.lineSeparator());
         }
     }
 }

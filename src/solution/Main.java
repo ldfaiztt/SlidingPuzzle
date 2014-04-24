@@ -32,11 +32,22 @@ public class Main {
     public static void main(String[] args) {
         String strInput = "";
         String strHeuristic = "";
-        int size = 0;
-        if (args.length > 1) {
-            size = Integer.parseInt(args[0]);
-            strHeuristic = args[1];
-            strInput = args[2];
+        int size = 3;
+        if (args.length >= 3) {
+            strHeuristic = args[0];
+            strInput = args[1];
+            try {
+                size = Integer.parseInt(args[2]);
+            } catch (NumberFormatException e) {
+                size = 3;
+            }
+        }
+        else if (args.length >= 2) {
+            strHeuristic = args[0];
+            strInput = args[1];
+        }
+        else if (args.length >= 1){
+            strHeuristic = args[0];
         }
 
 
@@ -54,8 +65,7 @@ public class Main {
             if (Math.pow(size, 2) != inputList.size()) {
                 System.err.println("Input size = " + size + " which is conflicted with amount of the data in the " + strInput);
                 return;
-            }
-            else if (!Plain.checkLegal(inputList)) {
+            } else if (!Plain.checkLegal(inputList)) {
                 System.err.println("The input array cannot be solved");
                 return;
             }
@@ -70,9 +80,8 @@ public class Main {
         Node sln = puzzle.Run();
         if (sln == null) {
             System.out.println("Puzzle failed!");
-        }
-        else {
-            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString());
+        } else {
+            System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString() + sln.getHuris());
         }
     }
 }
