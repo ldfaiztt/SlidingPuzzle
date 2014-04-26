@@ -1,6 +1,7 @@
 package solution;
 
 import eval.HeuristicFacotry;
+import model.Node;
 import model.Plain;
 
 import java.io.File;
@@ -16,6 +17,11 @@ import java.util.Scanner;
  * Time: 11:57 PM
  */
 public class Main {
+    private static final String paraInput = "input";
+    private static final String paraOutput = "output";
+    private static final String paraSize = "size";
+    private static final String paraHeuristic = "heuristic";
+
     private static List<Integer> getInput(String filename) throws FileNotFoundException {
         String path = new File(filename).getAbsolutePath();
         FileReader reader = new FileReader(path);
@@ -35,20 +41,21 @@ public class Main {
         String strOutput = "";
         int size = 3;
 
-        if (args.length >= 1) {
-            strHeuristic = args[0];
-        }
-        if (args.length >= 2) {
-            strOutput = args[1];
-        }
-        if (args.length >= 3) {
-            strInput = args[2];
-        }
-        if (args.length >= 4) {
-            try {
-                size = Integer.parseInt(args[3]);
-            } catch (NumberFormatException e) {
-                size = 3;
+        for (String arg : args) {
+            String[] para = arg.split("=");
+            if (para.length == 2) {
+                if(para[0].toLowerCase().contains(paraHeuristic)) {
+                    strHeuristic = para[1];
+                }
+                else if (para[0].toLowerCase().contains(paraInput)) {
+                    strInput = para[1];
+                }
+                else if (para[0].toLowerCase().contains(paraOutput)) {
+                    strOutput = para[1];
+                }
+                else if (para[0].toLowerCase().contains(paraSize)) {
+                    size = Integer.parseInt(para[1]);
+                }
             }
         }
 
@@ -73,7 +80,7 @@ public class Main {
         }
 
         HeuristicFacotry.typeHeuristic hType = HeuristicFacotry.typeHeuristic.Distance;
-        if (strHeuristic.toLowerCase().contains("misplaced")) {
+        if (strHeuristic.toLowerCase().contains("misplace")) {
             hType = HeuristicFacotry.typeHeuristic.Misplaced;
         }
 

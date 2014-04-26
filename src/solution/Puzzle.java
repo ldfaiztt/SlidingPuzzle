@@ -3,6 +3,7 @@ package solution;
 import action.Action;
 import action.ActionFactory;
 import eval.HeuristicFacotry;
+import model.Node;
 import model.Plain;
 import model.State;
 import model.Tile;

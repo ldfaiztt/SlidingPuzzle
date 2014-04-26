@@ -1,5 +1,7 @@
 package solution;
 
+import model.Node;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -132,8 +134,6 @@ public class Report {
 
     private static String linkBar() {
         String ret = "";
-        ret += "   |  " + System.lineSeparator();
-        ret += "   |  " + System.lineSeparator();
         ret += "   |  " + System.lineSeparator();
         ret += "   V  " + System.lineSeparator();
 

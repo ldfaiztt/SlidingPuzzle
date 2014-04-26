@@ -6,7 +6,7 @@ import model.State;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import solution.Node;
+import model.Node;
 import solution.Puzzle;
 import solution.Report;
 import solution.ReversePuzzle;
@@ -82,9 +82,11 @@ public class ReportTest {
 
         for (State init : initStateList) {
             Puzzle disPuzzle = new Puzzle(HeuristicFacotry.typeHeuristic.Distance, init);
+
             report.StartRecord();
             Node disSln = disPuzzle.Run();
             report.EndRecord(disPuzzle, disSln);
+
             assertNotNull(disSln);
             assertEquals(disSln.getState(), goal);
         }
@@ -101,9 +103,11 @@ public class ReportTest {
 
         for (State init : initStateList) {
             Puzzle misPuzzle = new Puzzle(HeuristicFacotry.typeHeuristic.Misplaced, init);
+
             report.StartRecord();
             Node misSln = misPuzzle.Run();
             report.EndRecord(misPuzzle, misSln);
+
             assertNotNull(misSln);
             assertEquals(misSln.getState(), goal);
         }

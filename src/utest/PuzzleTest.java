@@ -5,7 +5,7 @@ import model.Plain;
 import model.State;
 import org.junit.Before;
 import org.junit.Test;
-import solution.Node;
+import model.Node;
 import solution.Puzzle;
 
 import static org.junit.Assert.assertEquals;

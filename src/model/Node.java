@@ -1,8 +1,7 @@
-package solution;
+package model;
 
 import eval.HeuristicFacotry;
 import eval.Heuristics;
-import model.State;
 
 /**
  * User: Ding
