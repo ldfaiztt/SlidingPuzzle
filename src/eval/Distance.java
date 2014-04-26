@@ -18,6 +18,6 @@ public class Distance implements Heuristics {
 
     @Override
     public String toString() {
-        return "Heuristic via distance";
+        return "Distance";
     }
 }

@@ -18,6 +18,6 @@ public class Misplaced implements Heuristics {
 
     @Override
     public String toString() {
-        return "Heuristic via misplaced tiles";
+        return "Misplaced";
     }
 }

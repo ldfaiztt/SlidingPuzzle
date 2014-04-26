@@ -13,8 +13,8 @@ public class HeuristicFacotry {
 
     private static Heuristics Huris_ = null;
     private static typeHeuristic curType = null;
-    public static Heuristics CreateHeuristic(typeHeuristic hType) {
-        if (null == Huris_ || curType == null || curType != hType) {
+    public static Heuristics getHeuristicInstance(typeHeuristic hType) {
+        if (null == Huris_ || null == curType || curType != hType) {
             switch (hType) {
                 case Distance:
                     Huris_ = new Distance();

@@ -32,24 +32,25 @@ public class Main {
     public static void main(String[] args) {
         String strInput = "";
         String strHeuristic = "";
+        String strOutput = "";
         int size = 3;
-        if (args.length >= 3) {
+
+        if (args.length >= 1) {
             strHeuristic = args[0];
-            strInput = args[1];
+        }
+        if (args.length >= 2) {
+            strOutput = args[1];
+        }
+        if (args.length >= 3) {
+            strInput = args[2];
+        }
+        if (args.length >= 4) {
             try {
-                size = Integer.parseInt(args[2]);
+                size = Integer.parseInt(args[3]);
             } catch (NumberFormatException e) {
                 size = 3;
             }
         }
-        else if (args.length >= 2) {
-            strHeuristic = args[0];
-            strInput = args[1];
-        }
-        else if (args.length >= 1){
-            strHeuristic = args[0];
-        }
-
 
         List<Integer> inputList = null;
         if (!strInput.isEmpty()) {
@@ -82,6 +83,10 @@ public class Main {
             System.out.println("Puzzle failed!");
         } else {
             System.out.println("Puzzle success on: " + System.lineSeparator() + sln.toString() + sln.getHuris());
+
+            if (!strOutput.isEmpty()) {
+                Report.reportNodeTree(strOutput, sln);
+            }
         }
     }
 }

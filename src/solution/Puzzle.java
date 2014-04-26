@@ -10,7 +10,7 @@ import model.Tile;
 import java.util.*;
 
 public class Puzzle {
-    private final State goalState;
+    private State goalState;
     private HeuristicFacotry.typeHeuristic heuristicType;
     private Node root;
 
@@ -19,7 +19,7 @@ public class Puzzle {
     private List<Action> actions;
 
     public Puzzle(int size, HeuristicFacotry.typeHeuristic hType, List<Integer> list) {
-        State curState;
+        State initState;
         if (list != null && list.size() > 0) {
             List<List<Tile>> max = new ArrayList<List<Tile>>();
             for (int i = 0; i < size; i++) {
@@ -29,14 +29,27 @@ public class Puzzle {
                 }
                 max.add(row);
             }
-            curState = new Plain(max);
+            initState = new Plain(max);
         } else {
-            curState = new Plain(size, false);
+            initState = new Plain(size, false);
         }
 
+        InitPuzzle(size, hType,initState);
+    }
+
+    public Puzzle(HeuristicFacotry.typeHeuristic hType, State initState) {
+        int defaultSize = 3;
+        if (initState == null) {
+            initState = new Plain(defaultSize, false);
+        }
+
+        InitPuzzle(defaultSize, hType, initState);
+    }
+
+    private void InitPuzzle(int size, HeuristicFacotry.typeHeuristic hType, State initialState) {
         goalState = new Plain(size, true);
         heuristicType = hType;
-        root = new Node(curState, goalState, 0, heuristicType);
+        root = new Node(initialState, goalState, null, heuristicType);
 
         frontier = new PriorityQueue<Node>();
         explored = new HashMap<Integer, Node>();
@@ -44,10 +57,6 @@ public class Puzzle {
         for (ActionFactory.typeAction aType : ActionFactory.typeAction.values()) {
             actions.add(ActionFactory.CreateAction(aType));
         }
-    }
-
-    public Node getRoot() {
-        return root;
     }
 
     private void PrintNode(String action, Node node) {
@@ -73,6 +82,10 @@ public class Puzzle {
         System.out.println(ret);
     }
 
+    public int getNodesNumber() {
+        return explored.size() + frontier.size();
+    }
+
     protected Node AddExplored(Node node) {
         //PrintNode("Explored", node);
         return explored.put(node.hashCode(), node);
@@ -88,14 +101,14 @@ public class Puzzle {
 
         while (!frontier.isEmpty()){
             Node curNode = frontier.poll();
+            AddExplored(curNode);
+
             if (ReachGoal(curNode)){
                 return curNode;
             }
-            AddExplored(curNode);
 
             for (Action action : actions) {
-                Node next = new Node(action.act(curNode.getState()), goalState, curNode.getCost() + 1, heuristicType);
-                //curNode.AddChild(next);
+                Node next = new Node(action.act(curNode.getState()), goalState, curNode, heuristicType);
                 if (!explored.containsKey(next.hashCode())) {
                     AddFrontier(next);
                 }
@@ -121,8 +134,7 @@ public class Puzzle {
         }
 
         for (Action action : actions) {
-            Node next = new Node(action.act(cur.getState()), goalState, cur.getCost() + 1, heuristicType);
-            //cur.AddChild(next);
+            Node next = new Node(action.act(cur.getState()), goalState, cur, heuristicType);
             if (!explored.containsKey(next.hashCode())) {
                 AddFrontier(next);
             }

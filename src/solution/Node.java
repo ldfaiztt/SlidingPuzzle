@@ -4,9 +4,6 @@ import eval.HeuristicFacotry;
 import eval.Heuristics;
 import model.State;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * User: Ding
  * Date: 4/19/2014
@@ -15,32 +12,39 @@ import java.util.List;
 public class Node implements Comparable{
     private State curState;
     private State goalState;
-    private int cost;
     private Heuristics huris;
-    private List<Node> childern;
+    private Node parent;
 
-    public Node(State st, State goal, int cost, HeuristicFacotry.typeHeuristic hType) {
+    public Node(State st, State goal, Node parent, HeuristicFacotry.typeHeuristic hType) {
         this.curState = st;
         this.goalState = goal;
-        this.cost = cost;
-        this.huris = HeuristicFacotry.CreateHeuristic(hType);
-        this.childern = new ArrayList<Node>();
+        this.huris = HeuristicFacotry.getHeuristicInstance(hType);
+        this.parent = parent;
+    }
+
+    public boolean isRoot() {
+        return parent == null;
     }
 
     public State getState() {
         return curState;
     }
 
-    public int getCost() {
-        return cost;
+    public int getCost()
+    {
+        if (parent == null) {
+            return  0;
+        }
+
+        return parent.getCost() + 1;
+    }
+
+    public Node getParent() {
+        return parent;
     }
 
     public int CostEval() {
-        return cost + huris.eval(curState,goalState);
-    }
-
-    public boolean AddChild(Node node) {
-        return childern.add(node);
+        return getCost() + huris.eval(curState,goalState);
     }
 
     public Heuristics getHuris() {
@@ -66,7 +70,7 @@ public class Node implements Comparable{
 
         int mid = lines.length / 2;
 
-        int actualCost = cost;
+        int actualCost = getCost();
         int heuristicCost = huris.eval(curState,goalState);
         int sumCost = actualCost + heuristicCost;
         String ret = "";
