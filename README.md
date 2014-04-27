@@ -37,7 +37,7 @@ size :          Integer type, set the size of the puzzle, it = sqrt(puzzle tile 
 You can ignore all the optional parameters or some of them. The order of parameter does not matter.
 eg, "Main.class"
     "Main.class heuristic=distance"
-    "Main.class heuristic=distance input=step.log"
-    "Main.class input=step.log heuristic=distance output=matrix.input"
+    "Main.class heuristic=distance output=step.log"
+    "Main.class output=step.log heuristic=distance input=matrix.input"
     "Main.class size=4"
-are all valid format of run parameters.
+are all valid format of running parameters.
